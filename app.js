@@ -15,8 +15,17 @@ app.get('/' , (req,res)=>{
 
 //rota simples de receber dados via metodo Post
 app.post('/cadastrar' , async (req,res) =>{
-  console.log(req.body);
-  res.send("Pagina de Cadastro acessada");
+  //cadastrar usuario na tabela users do banco de dados
+  await User.create(req.body)
+  .then(function(){
+    return res.json({
+      mensagem:"Usuario Cadastrado com Sucesso"
+    })
+  }).catch(function(){
+    return res.status(400).json({
+      mensagem:"Erro Usuario n pode ser cadastrado"
+    })
+  })
 });
 
 
